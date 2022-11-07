@@ -17,8 +17,8 @@ module.exports = {
   single: async (req, res) => {
     try {
       const project = await Project.findOne({
-        where: { project_number: req.body.projectNumber },
-        include: [{ Carpentry, CarpentryOutcome }],
+        where: { project_number: Number(req.params.projectNumber) },
+        include: [Carpentry, CarpentryOutcome, IronWorking, IronWorkingOutcome, Light, LightOutcome, Marble, MarbleOutcome, IncomePartial, IncomeTotal],
       });
 
       res.send(project);
@@ -58,7 +58,7 @@ module.exports = {
 
   edit: async (req, res) => {
     try {
-      const project = await Project.findByPk(req.params.projectNumber)
+      const project = await Project.findByPk(req.params.projectNumber);
       await project.update(req.body);
       res.sendStatus(200);
     } catch (err) {

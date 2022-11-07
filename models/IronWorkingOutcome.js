@@ -13,7 +13,7 @@ IronWorkingOutcome.init(
       type: S.FLOAT,
       allowNull: false,
     },
-    invoice: {
+    invoice_number: {
       type: S.STRING,
       allowNull: false,
     },
@@ -26,6 +26,7 @@ IronWorkingOutcome.init(
     },
     paid: {
       type: S.BOOLEAN,
+      defaultValue: false,
     },
   },
   { sequelize: db, modelName: "iron_working_outcome" }
