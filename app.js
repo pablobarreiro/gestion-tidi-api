@@ -5,7 +5,7 @@ const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const expressSession = require("express-session");
 const LocalStrategy = require("passport-local");
-const { User } = require("./models/User");
+const { User } = require("./models");
 const db = require('./db')
 const routes = require("./routes");
 // require("dotenv").config({ path: ".env" });

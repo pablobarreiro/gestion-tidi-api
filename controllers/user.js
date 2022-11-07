@@ -19,19 +19,19 @@ module.exports = {
         password: req.body.password,
         is_admin: req.body.is_admin || false,
       });
-      if (req.user.is_admin)
+      if (createdUser.is_admin)
         res.status(201).send({
           id: createdUser.id,
           username: createdUser.username,
-          is_admin: req.user.is_admin,
+          is_admin: createdUser.is_admin,
         });
       else
-        res.status(201).send({ id: req.user.id, username: req.user.username });
+        res.status(201).send({ id: createdUser.id, username: createdUser.username });
     } catch (err) {
       if (err.errors) res.send(err.errors[0].message);
       else {
-        console.log(err.original);
-        res.send(`${err.original}`);
+        console.log(err);
+        res.send(`${err}`);
       }
     }
   },
