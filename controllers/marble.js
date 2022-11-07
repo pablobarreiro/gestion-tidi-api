@@ -1,11 +1,11 @@
-const { Carpentry, CarpentryOutcome } = require("../models");
+const { Marble, MarbleOutcome } = require("../models");
 const Op = require("sequelize").Op;
 
 module.exports = {
   // req.params ---> projectNumber
   getOutcomes: async (req, res) => {
     try {
-      const outcomes = await CarpentryOutcome.findAll(
+      const outcomes = await MarbleOutcome.findAll(
         Number(req.params.projectNumber)
       );
       // Devuelve [outcome1, outcome2, ...]
@@ -17,14 +17,13 @@ module.exports = {
   },
 
   // req.params ---> projectNumber
-  // req.body ---> {total, adjust, shipping_total, shipping_paid, placement_total, placement_paid}
-  // Este controlador esta duplicado desde project (funcion edit)
+  // req.body ---> {total, adjust, placement_total, placement_paid}
   updateTotals: async (req, res) => {
     try {
-      const carpentryTotals = await Carpentry.findOne({
+      const marbleTotals = await Marble.findOne({
         where: { projectProjectNumber: Number(req.params.projectNumber) },
       });
-      await carpentryTotals.update(req.body);
+      await marbleTotals.update(req.body);
       res.sendStatus(200);
     } catch (err) {
       console.log(err);
@@ -35,7 +34,7 @@ module.exports = {
   // RUTA INCOMPLETA
   updateOutcomes: async (req, res) => {
     try {
-      // const carpentryOutcomes = await CarpentryOutcome.findAll({
+      // const MarbleOutcomes = await MarbleOutcome.findAll({
       //   where: { project_number: Number(req.params.projectNumber) },
       // });
       res.sendStatus(400);
@@ -45,16 +44,10 @@ module.exports = {
     }
   },
 
-  // req.body ---> [ {project_number,amount,pay_date}, {idem}, ... ]
+  // req.body ---> {project_number,amount,pay_date}
   newOutcome: async (req, res) => {
     try {
-      await CarpentryOutcome.bulkCreate(req.body);
-      const maxTrackingNumber = await CarpentryOutcome.max("tracking_number");
-      const newNumber = maxTrackingNumber + 1;
-      await CarpentryOutcome.update(
-        { tracking_number: newNumber },
-        { where: { tracking_number: 0 } }
-      );
+      await MarbleOutcome.create(req.body);
       res.sendStatus(201);
     } catch (err) {
       console.log(err);
@@ -64,10 +57,8 @@ module.exports = {
 
   //   deletePayment: async (req, res) => {
   //     try {
-  //         CarpentryOutcome.destroy({where:{[Op.and]: [
-  //             { tracking_number: req.body.tracking_number },
-  //             { project_number: req.body.project_number }
-  //           ]}})
+  //         MarbleOutcome.destroy({where:{project_number: req.body.project_number }
+  //         })
   //     } catch (err) {
   //         console.log(err)
   //     }
