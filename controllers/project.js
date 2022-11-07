@@ -58,8 +58,14 @@ module.exports = {
 
   edit: async (req, res) => {
     try {
-      const project = await Project.findByPk(req.params.projectNumber);
+      const projectNumber = Number(req.params.projectNumber)
+      const project = await Project.findByPk(projectNumber);
       await project.update(req.body);
+      if(req.body.carpentry) await Carpentry.update(req.body.carpentry, {where:{projectProjectNumber:projectNumber}})
+      if(req.body.ironWorking) await IronWorking.update(req.body.ironWorking, {where:{projectProjectNumber:projectNumber}})
+      if(req.body.light) await Light.update(req.body.light, {where:{projectProjectNumber:projectNumber}})
+      if(req.body.marble) await Marble.update(req.body.marble, {where:{projectProjectNumber:projectNumber}})
+      if(req.body.incomeTotal) await IncomeTotal.update(req.body.incomeTotal, {where:{projectProjectNumber:projectNumber}})
       res.sendStatus(200);
     } catch (err) {
       console.log(err);
