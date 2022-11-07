@@ -1,14 +1,14 @@
 const Sequelize = require("sequelize");
 // require("dotenv").config({ path: ".env" });
 
-const dbOptions = process.env.DATABASE_URL ? {
+// DEPLOY: DATABASE_URL = postgres://localhost:5432/gestiontidi
+
+const dbOptions = {
   logging: false,
   ssl: true,
   dialectOptions: { ssl: { require: true, rejectUnauthorized: false } },
-} : {
-  host: "localhost", dialect:"postgres"
 }
 
-const db = new Sequelize(process.env.DATABASE_URL || "gestion_tidi", null, null, dbOptions);
+const db = process.env.DATABASE_URL ? new Sequelize(process.env.DATABASE_URL, dbOptions) : new Sequelize("gestion_tidi", null, null, {host: "localhost", dialect:"postgres"})
 
 module.exports = db;

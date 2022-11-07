@@ -20,32 +20,32 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // PASSPORT
-// cookies
-app.use(cookieParser());
-app.use(expressSession({ secret: "superTopTMDB" }));
-// passport init
-app.use(passport.initialize());
-app.use(passport.session());
-// estrategia local
-passport.use(
-  new LocalStrategy({}, (username, password, done) => {
-    User.findOne({ where: { username: username.toLowerCase() } })
-      .then((user) => {
-        if (!user) done(null, false);
-        if (user.validatePassword(password)) done(null, user);
-        else done(null, false);
-      })
-      .catch((err) => done(err, false));
-  })
-);
-// serialize
-passport.serializeUser(function (user, done) {
-  done(null, user.id);
-});
-// deserialize
-passport.deserializeUser(function (id, done) {
-  User.findByPk(id).then((user) => done(null, user));
-});
+  // cookies
+  app.use(cookieParser());
+  app.use(expressSession({ secret: "superTopTMDB" }));
+  // passport init
+  app.use(passport.initialize());
+  app.use(passport.session());
+  // estrategia local
+  passport.use(
+    new LocalStrategy({}, (username, password, done) => {
+      User.findOne({ where: { username: username.toLowerCase() } })
+        .then((user) => {
+          if (!user) done(null, false);
+          if (user.validatePassword(password)) done(null, user);
+          else done(null, false);
+        })
+        .catch((err) => done(err, false));
+    })
+  );
+  // serialize
+  passport.serializeUser(function (user, done) {
+    done(null, user.id);
+  });
+  // deserialize
+  passport.deserializeUser(function (id, done) {
+    User.findByPk(id).then((user) => done(null, user));
+  });
 
 app.use("/api", routes);
 
