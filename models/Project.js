@@ -9,9 +9,10 @@ Project.init(
       type: S.INTEGER,
       unique: true,
       allowNull: false,
+      primaryKey: true
     },
     initial_date: {
-      type: S.DATE
+      type: S.DATE,
     },
     name: {
       type: S.STRING,
@@ -21,6 +22,12 @@ Project.init(
     },
     phone: {
       type: S.STRING,
+    },
+    email: {
+      type: S.STRING,
+      validate: {
+        isEmail: true,
+      },
     },
     salesman: {
       type: S.STRING,
@@ -36,7 +43,7 @@ Project.init(
       defaultValue: false,
     },
     internal_state: {
-      type: S.STRING
+      type: S.STRING,
     },
   },
   { sequelize: db, modelName: "projects" }

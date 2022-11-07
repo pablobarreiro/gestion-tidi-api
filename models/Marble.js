@@ -15,8 +15,9 @@ Marble.init(
       type: S.FLOAT,
     },
     placement_paid: {
-      type: S.BOOLEAN
-    }
+      type: S.BOOLEAN,
+      defaultValue: false,
+    },
   },
   { sequelize: db, modelName: "marble_generals" }
 );

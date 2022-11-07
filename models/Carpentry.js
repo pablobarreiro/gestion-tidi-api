@@ -19,9 +19,11 @@ Carpentry.init(
     },
     shipping_paid: {
       type: S.BOOLEAN,
+      defaultValue:false
     },
     placement_paid: {
       type: S.BOOLEAN,
+      defaultValue:false
     },
   },
   { sequelize: db, modelName: "carpentry_generals" }

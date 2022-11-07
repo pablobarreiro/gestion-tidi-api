@@ -5,17 +5,15 @@ class Light extends S.Model {}
 
 Light.init(
   {
-    adjust_total: {
+    adjust: {
       type: S.FLOAT,
     },
     placement_total: {
       type: S.FLOAT,
     },
-    adjust_paid: {
-      type: S.BOOLEAN,
-    },
     placement_paid: {
       type: S.BOOLEAN,
+      defaultValue: false,
     },
   },
   { sequelize: db, modelName: "light_generals" }
