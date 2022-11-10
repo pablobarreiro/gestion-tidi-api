@@ -8,7 +8,7 @@ const LocalStrategy = require("passport-local");
 const { User } = require("./models");
 const db = require('./db')
 const routes = require("./routes");
-// require("dotenv").config({ path: ".env" });
+require("dotenv").config({ path: ".env" });
 
 const app = express();
 
@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // PASSPORT
   // cookies
   app.use(cookieParser());
-  app.use(expressSession({ secret: "superTopTMDB" }));
+  app.use(expressSession({ secret: process.env.PASSPORT_SECRET }));
   // passport init
   app.use(passport.initialize());
   app.use(passport.session());
