@@ -5,10 +5,6 @@ class IronWorkingOutcome extends S.Model {}
 
 IronWorkingOutcome.init(
   {
-    project_number: {
-      type: S.INTEGER,
-      allowNull: false,
-    },
     amount: {
       type: S.FLOAT,
       allowNull: false,

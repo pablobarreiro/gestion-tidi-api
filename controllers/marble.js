@@ -2,11 +2,11 @@ const { Marble, MarbleOutcome } = require("../models");
 const Op = require("sequelize").Op;
 
 module.exports = {
-  // req.params ---> projectNumber
+  // req.params ---> projectId
   getOutcomes: async (req, res) => {
     try {
       const outcomes = await MarbleOutcome.findAll(
-        Number(req.params.projectNumber)
+        Number(req.params.projectId)
       );
       // Devuelve [outcome1, outcome2, ...]
       res.sendStatus(outcomes);
@@ -16,12 +16,12 @@ module.exports = {
     }
   },
 
-  // req.params ---> projectNumber
+  // req.params ---> projectId
   // req.body ---> {total, adjust, placement_total, placement_paid}
   updateTotals: async (req, res) => {
     try {
       const marbleTotals = await Marble.findOne({
-        where: { projectProjectNumber: Number(req.params.projectNumber) },
+        where: { projectId: Number(req.params.projectId) },
       });
       await marbleTotals.update(req.body);
       res.sendStatus(200);
@@ -35,7 +35,7 @@ module.exports = {
   updateOutcomes: async (req, res) => {
     try {
       // const MarbleOutcomes = await MarbleOutcome.findAll({
-      //   where: { project_number: Number(req.params.projectNumber) },
+      //   where: { project_number: Number(req.params.projectId) },
       // });
       res.sendStatus(400);
     } catch (err) {

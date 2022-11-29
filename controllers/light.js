@@ -2,11 +2,11 @@ const { Light, LightOutcome } = require("../models");
 const Op = require("sequelize").Op;
 
 module.exports = {
-  // req.params ---> projectNumber
+  // req.params ---> projectId
   getOutcomes: async (req, res) => {
     try {
       const outcomes = await LightOutcome.findAll(
-        Number(req.params.projectNumber)
+        Number(req.params.projectId)
       );
       // Devuelve [outcome1, outcome2, ...]
       res.sendStatus(outcomes);
@@ -16,13 +16,13 @@ module.exports = {
     }
   },
 
-  // req.params ---> projectNumber
+  // req.params ---> projectId
   // req.body ---> {adjust}
   // Este controlador esta duplicado desde project (funcion edit)
   updateTotals: async (req, res) => {
     try {
       await Light.update(req.body, {
-        where: { projectProjectNumber: Number(req.params.projectNumber) },
+        where: { projectId: Number(req.params.projectId) },
       });
       res.sendStatus(200);
     } catch (err) {

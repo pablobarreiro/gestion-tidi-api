@@ -5,7 +5,7 @@ class Project extends S.Model {}
 
 Project.init(
   {
-    project_number: {
+    id: {
       type: S.INTEGER,
       unique: true,
       allowNull: false,

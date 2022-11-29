@@ -43,6 +43,7 @@ module.exports = {
   },
 
   persist: (req, res) => {
+    console.log(req.user)
     if (req.user){
     if (req.user.is_admin)
       res.send({

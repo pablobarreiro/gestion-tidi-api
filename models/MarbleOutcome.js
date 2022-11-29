@@ -5,10 +5,6 @@ class MarbleOutcome extends S.Model {}
 
 MarbleOutcome.init(
   {
-    project_number: {
-      type: S.INTEGER,
-      allowNull: false
-    },
     amount: {
       type: S.FLOAT,
       allowNull: false

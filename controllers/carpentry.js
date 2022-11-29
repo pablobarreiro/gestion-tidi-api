@@ -2,11 +2,11 @@ const { Carpentry, CarpentryOutcome } = require("../models");
 const Op = require("sequelize").Op;
 
 module.exports = {
-  // req.params ---> projectNumber
+  // req.params ---> projectId
   getOutcomes: async (req, res) => {
     try {
       const outcomes = await CarpentryOutcome.findAll(
-        Number(req.params.projectNumber)
+        Number(req.params.projectId)
       );
       // Devuelve [outcome1, outcome2, ...]
       res.sendStatus(outcomes);
@@ -16,13 +16,13 @@ module.exports = {
     }
   },
 
-  // req.params ---> projectNumber
+  // req.params ---> projectId
   // req.body ---> {total, adjust, shipping_total, shipping_paid, placement_total, placement_paid}
   // Este controlador esta duplicado desde project (funcion edit)
   updateTotals: async (req, res) => {
     try {
       const carpentryTotals = await Carpentry.findOne({
-        where: { projectProjectNumber: Number(req.params.projectNumber) },
+        where: { projectId: Number(req.params.projectId) },
       });
       await carpentryTotals.update(req.body);
       res.sendStatus(200);
@@ -36,7 +36,7 @@ module.exports = {
   updateOutcomes: async (req, res) => {
     try {
       // const carpentryOutcomes = await CarpentryOutcome.findAll({
-      //   where: { project_number: Number(req.params.projectNumber) },
+      //   where: { project_number: Number(req.params.projectId) },
       // });
       res.sendStatus(400);
     } catch (err) {
@@ -45,10 +45,17 @@ module.exports = {
     }
   },
 
-  // req.body ---> [ {project_number,amount,pay_date}, {idem}, ... ]
+  // req.body ---> {pay_date: ... , projects:[ {project_number,amount}, {idem}, ... ]}
   newOutcome: async (req, res) => {
     try {
-      await CarpentryOutcome.bulkCreate(req.body);
+      for (let i = 0; i < req.body.projects.length; i++) {
+        const carpentryOutcome = await CarpentryOutcome.create({
+          pay_date: req.body.pay_date,
+          projectId: req.body.projects[i].project_number,
+          amount: req.body.projects[i].amount,
+        });
+      }
+
       const maxTrackingNumber = await CarpentryOutcome.max("tracking_number");
       const newNumber = maxTrackingNumber + 1;
       await CarpentryOutcome.update(

@@ -5,10 +5,6 @@ class IncomePartial extends S.Model {}
 
 IncomePartial.init(
   {
-    project_number: {
-      type: S.INTEGER,
-      allowNull: false,
-    },
     amount: {
       type: S.FLOAT,
     },
