@@ -1,4 +1,4 @@
-const { IronWorking, IronWorkingOutcome } = require("../models");
+const { IronWorking, IronWorkingOutcome, Project } = require("../models");
 const Op = require("sequelize").Op;
 
 module.exports = {
@@ -31,10 +31,10 @@ module.exports = {
     }
   },
 
-  // req.body ---> {project_number, amount, invoice_number, invoice_date}
+  // req.body ---> {projectId, amount, invoice_number, invoice_date}
   newInvoice: async (req, res) => {
     try {
-      await IronWorkingOutcome.create(req.body);
+      const newOutcome = await IronWorkingOutcome.create(req.body)
       res.sendStatus(201);
     } catch (err) {
       console.log(err);
@@ -42,7 +42,7 @@ module.exports = {
     }
   },
 
-  // req.body ---> [{project_number, amount, invoice_number, invoice_date}, ...]
+  // req.body ---> [{projectId, amount, invoice_number, invoice_date}, ...]
   newInvoices: async (req, res) => {
     try {
       await IronWorkingOutcome.bulkCreate(req.body);
