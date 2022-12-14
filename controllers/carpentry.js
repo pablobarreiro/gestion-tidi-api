@@ -51,7 +51,7 @@ module.exports = {
       for (let i = 0; i < req.body.projects.length; i++) {
         const carpentryOutcome = await CarpentryOutcome.create({
           pay_date: req.body.pay_date,
-          projectId: req.body.projects[i].project_number,
+          projectId: req.body.projects[i].projectId,
           amount: req.body.projects[i].amount,
         });
       }

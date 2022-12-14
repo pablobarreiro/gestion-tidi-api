@@ -17,7 +17,7 @@ module.exports = {
   },
 
   // req.params ---> projectId
-  // req.body ---> {adjust}
+  // req.body ---> {adjust,placement_total,placement_paid}
   // Este controlador esta duplicado desde project (funcion edit)
   updateTotals: async (req, res) => {
     try {
@@ -31,7 +31,7 @@ module.exports = {
     }
   },
 
-  // req.body ---> {project_number, amount, invoice_number, invoice_date}
+  // req.body ---> {projectId, amount, invoice_number, invoice_date}
   newInvoice: async (req, res) => {
     try {
       await LightOutcome.create(req.body);
@@ -42,7 +42,7 @@ module.exports = {
     }
   },
 
-  // req.body ---> [{project_number, amount, invoice_number, invoice_date}, ...]
+  // req.body ---> [{projectId, amount, invoice_number, invoice_date}, ...]
   newInvoices: async (req, res) => {
     try {
       await LightOutcome.bulkCreate(req.body);
@@ -53,7 +53,7 @@ module.exports = {
     }
   },
 
-  // req.body ---> [{id, project_number, invoice_number, pay_date, paid}, {idem}, ...]
+  // req.body ---> [{id, projectId, invoice_number, pay_date, paid}, {idem}, ...]
   payInvoices: async (req, res) => {
     try {
       const invoicesToPay = req.body;
