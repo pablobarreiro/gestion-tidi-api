@@ -19,6 +19,7 @@ module.exports = {
       const project = await Project.findOne({
         where: { id: Number(req.params.projectId) },
         include: [Carpentry, CarpentryOutcome, IronWorking, IronWorkingOutcome, Light, LightOutcome, Marble, MarbleOutcome, IncomePartial, IncomeTotal],
+        order: [['id', 'ASC']]
       });
       res.send(project);
     } catch (err) {

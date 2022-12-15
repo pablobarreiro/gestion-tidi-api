@@ -1,5 +1,5 @@
 const { IronWorking, IronWorkingOutcome, Project } = require("../models");
-const Op = require("sequelize").Op;
+const { Op } = require("sequelize");
 
 module.exports = {
   // req.params ---> projectId
@@ -65,20 +65,18 @@ module.exports = {
       res.sendStatus(200);
     } catch (err) {
       console.log(err);
-      res.status(400).send(err);
+      res.status(400).send(err.message);
     }
   },
-  // HECHO CON .THEN() POR SI NO FUNCIONA EL ASYNC (BORRAR SI FUNCIONA)
-  // payInvoices: (req, res) => {
-  //   const invoicesToPay = req.body
-  //   invoicesToPay.forEach(invoice => {
-  //     IronWorkingOutcome.findOne({where:{invoice_number:invoice.invoice_number}})
-  //     .then(found => found.update(invoice))
-  //   })
-  //   .then(()=> res.send(200))
-  //   .catch((err)=>{
-  //     console.log(err)
-  //     res.send(err)
-  //   })
-  // },
+  
+  // req.params ---> id (outcomeId)
+  deleteOutcome: async (req, res) => {
+    try {
+      await IronWorkingOutcome.destroy({where:{id:req.params.id}})
+      res.sendStatus(204)
+    } catch (err) {
+      console.log(err)
+      res.status(400).send(err.message)
+    }
+  }
 };

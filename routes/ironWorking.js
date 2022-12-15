@@ -1,11 +1,19 @@
 const express = require("express");
-const ironWorkingControllers = require("../controllers/ironWorking");
+const {
+  getOutcomes,
+  updateTotals,
+  newInvoice,
+  newInvoices,
+  payInvoices,
+  deleteOutcome,
+} = require("../controllers/ironWorking");
 const router = express.Router();
 
-router.get('/:projectId/outcomes', ironWorkingControllers.getOutcomes)
-router.put('/:projectId/totals', ironWorkingControllers.updateTotals)
-router.post('/invoice', ironWorkingControllers.newInvoice)
-router.post('/invoices', ironWorkingControllers.newInvoices)
-router.put('/invoices', ironWorkingControllers.payInvoices)
+router.get("/:projectId/outcomes", getOutcomes);
+router.put("/:projectId/totals", updateTotals);
+router.post("/invoice", newInvoice);
+router.post("/invoices", newInvoices);
+router.put("/invoices", payInvoices);
+router.delete("/outcome/:id", deleteOutcome);
 
-module.exports = router
+module.exports = router;
