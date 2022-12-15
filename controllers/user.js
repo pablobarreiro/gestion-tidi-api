@@ -1,15 +1,26 @@
 const { User } = require("../models");
 const Op = require("sequelize").Op;
+const { generateToken } = require("../config/tokens");
 
 module.exports = {
-  login: (req, res) => {
-    if (req.user.is_admin)
-      res.status(201).send({
-        id: req.user.id,
-        username: req.user.username,
-        is_admin: req.user.is_admin,
+  login: async (req, res) => {
+    try {
+      const user = await User.findOne({
+        where: { username: req.body.username.toLowerCase() },
       });
-    else res.status(201).send({ id: req.user.id, username: req.user.username });
+      if (!user) return res.status(404).send('User not found');
+      if (!user.validatePassword(req.body.password)) return res.status(401).send('Wrong password')
+      else {
+        const token = generateToken({id:user.id});
+        res.cookie("token", token, {httpOnly:true}).status(200).json({
+          id: user.id,
+          username: user.username,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+      res.status(500).send(err.message);
+    }
   },
 
   newUser: async (req, res) => {
@@ -19,41 +30,23 @@ module.exports = {
         password: req.body.password,
         is_admin: req.body.is_admin || false,
       });
-      if (createdUser.is_admin)
-        res.status(201).send({
-          id: createdUser.id,
-          username: createdUser.username,
-          is_admin: createdUser.is_admin,
-        });
-      else
-        res.status(201).send({ id: createdUser.id, username: createdUser.username });
+      res.status(201).send({
+        id: createdUser.id,
+        username: createdUser.username,
+      });
     } catch (err) {
-      if (err.errors) res.send(err.errors[0].message);
-      else {
-        console.log(err);
-        res.send(`${err}`);
-      }
+      console.log(err);
+      res.status(500).send(err.message);
     }
   },
 
   logout: (req, res) => {
-    req.session.destroy(() => {
-      res.sendStatus(204);
-    });
+    res.clearCookie('token')
+    res.status(204).json('logged out successfully');
   },
 
   persist: (req, res) => {
-    console.log(req.user)
-    if (req.user){
-    if (req.user.is_admin)
-      res.send({
-        id: req.user.id,
-        username: req.user.username,
-        is_admin: req.user.is_admin,
-      })
-    else res.status(201).send({ id: req.user.id, username: req.user.username });
-    }
-    else res.sendStatus(401);
+    res.send(req.user);
   },
 
   // promote: async (req, res) => {

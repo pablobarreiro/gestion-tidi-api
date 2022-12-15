@@ -1,12 +1,12 @@
 const express = require("express");
-const userControllers = require("../controllers/user");
+const {login,newUser,logout,persist} = require("../controllers/user");
 const router = express.Router();
-const passport = require("passport");
+const { validateToken } = require("../config/tokens");
 
-router.post('/login', passport.authenticate('local'), userControllers.login);
-router.post('/newUser', userControllers.newUser);
-router.post('/logout', userControllers.logout);
-router.get('/me', userControllers.persist);
-// router.put('/promote', userControllers.promote)
+router.post('/login', login);
+router.post('/newUser', newUser);
+router.post('/logout', logout);
+router.get('/me', validateToken, persist);
+// router.put('/promote', promote)
 
 module.exports = router
