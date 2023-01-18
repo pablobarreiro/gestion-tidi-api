@@ -10,6 +10,7 @@ const {
   MarbleOutcome,
   IncomePartial,
   IncomeTotal,
+  Budget,
 } = require("../models");
 const Op = require("sequelize").Op;
 
@@ -18,7 +19,7 @@ module.exports = {
     try {
       const project = await Project.findOne({
         where: { id: Number(req.params.projectId) },
-        include: [Carpentry, CarpentryOutcome, IronWorking, IronWorkingOutcome, Light, LightOutcome, Marble, MarbleOutcome, IncomePartial, IncomeTotal],
+        include: [Carpentry, CarpentryOutcome, IronWorking, IronWorkingOutcome, Light, LightOutcome, Marble, MarbleOutcome, IncomePartial, IncomeTotal, Budget],
         order: [['id', 'ASC']]
       });
       res.send(project);
@@ -32,7 +33,7 @@ module.exports = {
   all: async (req, res) => {
     try {
       const project = await Project.findAll({
-        include: [Carpentry, CarpentryOutcome, IronWorking, IronWorkingOutcome, Light, LightOutcome, Marble, MarbleOutcome, IncomePartial, IncomeTotal],
+        include: [Carpentry, CarpentryOutcome, IronWorking, IronWorkingOutcome, Light, LightOutcome, Marble, MarbleOutcome, IncomePartial, IncomeTotal, Budget],
       });
       res.send(project);
     } catch (err) {
@@ -55,12 +56,14 @@ module.exports = {
       const lightTotals = await Light.create(initialValues);
       const marbleTotals = await Marble.create(initialValues);
       const incomeTotals = await IncomeTotal.create(initialValues);
+      const budgetTotals = await Budget.create({carpentry:0,iron_working:0,light:0,marble:0});
 
-      carpentryTotals.setProject(newProject);
-      ironWorkingTotals.setProject(newProject);
-      lightTotals.setProject(newProject);
-      marbleTotals.setProject(newProject);
-      incomeTotals.setProject(newProject);
+      await carpentryTotals.setProject(newProject);
+      await ironWorkingTotals.setProject(newProject);
+      await lightTotals.setProject(newProject);
+      await marbleTotals.setProject(newProject);
+      await incomeTotals.setProject(newProject);
+      await budgetTotals.setProject(newProject);
 
       res.sendStatus(201);
     } catch (err) {

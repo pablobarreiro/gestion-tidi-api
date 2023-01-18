@@ -40,4 +40,15 @@ module.exports = {
       res.status(400).send(err);
     }
   },
+
+  // req.params ---> id (paymentId)
+  removePayment: async (req, res) => {
+    try {
+      await IncomePartial.destroy({where:{id:req.params.id}})
+      res.sendStatus(204)
+    } catch (err) {
+      console.log(err)
+      res.send(err)
+    }
+  }
 };

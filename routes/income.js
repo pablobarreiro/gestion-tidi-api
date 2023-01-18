@@ -1,9 +1,9 @@
 const express = require("express");
-const incomeControllers = require("../controllers/income");
+const {getPayments, updateTotals, newPayment, removePayment} = require("../controllers/income");
 const router = express.Router();
 
-router.get('/:projectId/payments', incomeControllers.getPayments)
-router.put('/:projectId/totals', incomeControllers.updateTotals)
-router.post('/payment', incomeControllers.newPayment)
-
+router.get('/:projectId/payments', getPayments)
+router.put('/:projectId/totals', updateTotals)
+router.post('/payment', newPayment)
+router.delete('/:id', removePayment)
 module.exports = router

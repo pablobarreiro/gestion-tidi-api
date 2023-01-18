@@ -11,7 +11,7 @@ module.exports = {
       if (!user) return res.status(404).send('User not found');
       if (!user.validatePassword(req.body.password)) return res.status(401).send('Wrong password')
       else {
-        const token = generateToken({id:user.id});
+        const token = generateToken({id:user.id,username:user.username});
         res.cookie("token", token, {httpOnly:true}).status(200).json({
           id: user.id,
           username: user.username,

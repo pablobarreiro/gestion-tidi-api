@@ -8,6 +8,9 @@ IronWorking.init(
     adjust: {
       type: S.FLOAT,
     },
+    adjust_paid: {
+      type: S.BOOLEAN,
+    }
   },
   { sequelize: db, modelName: "iron_working_generals" }
 );

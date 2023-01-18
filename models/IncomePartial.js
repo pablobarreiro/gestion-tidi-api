@@ -14,6 +14,9 @@ IncomePartial.init(
     payment_method: {
       type: S.STRING,
     },
+    payment_info: {
+      type: S.STRING,
+    },
   },
   { sequelize: db, modelName: "income_partials" }
 );

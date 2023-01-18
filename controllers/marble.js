@@ -55,12 +55,14 @@ module.exports = {
     }
   },
 
-  //   deletePayment: async (req, res) => {
-  //     try {
-  //         MarbleOutcome.destroy({where:{project_number: req.body.project_number }
-  //         })
-  //     } catch (err) {
-  //         console.log(err)
-  //     }
-  //   }
+  // req.params ---> id
+  deleteOutcome: async (req, res) => {
+    try {
+      MarbleOutcome.destroy({where:{id: req.params.id }})
+      res.sendStatus(204)
+    } catch (err) {
+      console.log(err)
+      res.send(err)
+    }
+  }
 };

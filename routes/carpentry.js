@@ -1,10 +1,11 @@
 const express = require("express");
-const carpentryControllers = require("../controllers/carpentry");
+const {getOutcomes, updateTotals, updateOutcomes, newOutcome, deleteOutcome} = require("../controllers/carpentry");
 const router = express.Router();
 
-router.get('/:projectId/outcomes', carpentryControllers.getOutcomes)
-router.put('/:projectId/totals', carpentryControllers.updateTotals)
-// router.put('/:projectId/outcomes', carpentryControllers.updateOutcomes)
-router.post('/outcome', carpentryControllers.newOutcome)
+router.get('/:projectId/outcomes', getOutcomes)
+router.put('/:projectId/totals', updateTotals)
+// router.put('/:projectId/outcomes', updateOutcomes)
+router.post('/outcome', newOutcome)
+router.delete('/outcome/:id', deleteOutcome)
 
 module.exports = router

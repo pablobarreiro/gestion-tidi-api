@@ -6,6 +6,7 @@ const Carpentry = require("./Carpentry");
 const Light = require("./Light");
 const Marble = require("./Marble");
 const IncomeTotal = require("./IncomeTotal");
+const Budget = require("./Budget");
 
 Project.hasOne(IronWorking);
 IronWorking.belongsTo(Project);
@@ -17,6 +18,8 @@ Project.hasOne(Marble);
 Marble.belongsTo(Project);
 Project.hasOne(IncomeTotal);
 IncomeTotal.belongsTo(Project);
+Project.hasOne(Budget);
+Budget.belongsTo(Project);
 
 const IronWorkingOutcome = require("./IronWorkingOutcome");
 const CarpentryOutcome = require("./CarpentryOutcome");
@@ -35,6 +38,10 @@ MarbleOutcome.belongsTo(Project);
 Project.hasMany(IncomePartial);
 IncomePartial.belongsTo(Project);
 
+const BranchOffice = require("./BranchOffice");
+const InternalState = require("./InternalState");
+const Salesman = require("./Salesman");
+
 module.exports = {
   User,
   Project,
@@ -48,4 +55,8 @@ module.exports = {
   LightOutcome,
   MarbleOutcome,
   IncomePartial,
+  BranchOffice,
+  InternalState,
+  Salesman,
+  Budget,
 };

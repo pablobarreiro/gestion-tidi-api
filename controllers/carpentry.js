@@ -68,15 +68,13 @@ module.exports = {
       res.status(400).send(err);
     }
   },
-
-  //   deletePayment: async (req, res) => {
-  //     try {
-  //         CarpentryOutcome.destroy({where:{[Op.and]: [
-  //             { tracking_number: req.body.tracking_number },
-  //             { project_number: req.body.project_number }
-  //           ]}})
-  //     } catch (err) {
-  //         console.log(err)
-  //     }
-  //   }
+  deleteOutcome: async (req,res) => {
+    try {
+      CarpentryOutcome.destroy({where:{id:req.params.id}})
+      res.sendStatus(204)
+    } catch (err) {
+      console.log(err)
+      res.send(err)
+    }
+  }
 };

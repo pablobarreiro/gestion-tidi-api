@@ -68,17 +68,15 @@ module.exports = {
       res.status(400).send(err);
     }
   },
-  // HECHO CON .THEN() POR SI NO FUNCIONA EL ASYNC (BORRAR SI FUNCIONA)
-  // payInvoices: (req, res) => {
-  //   const invoicesToPay = req.body
-  //   invoicesToPay.forEach(invoice => {
-  //     LightOutcome.findOne({where:{invoice_number:invoice.invoice_number}})
-  //     .then(found => found.update(invoice))
-  //   })
-  //   .then(()=> res.send(200))
-  //   .catch((err)=>{
-  //     console.log(err)
-  //     res.send(err)
-  //   })
-  // },
+
+  // req.params ---> id (outcomeId)
+  deleteOutcome: async (req, res) => {
+    try {
+      await LightOutcome.destroy({where:{id:req.params.id}})
+      res.sendStatus(204)
+    } catch (err) {
+      console.log(err)
+      res.status(400).send(err.message)
+    }
+  }
 };

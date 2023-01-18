@@ -1,11 +1,19 @@
 const express = require("express");
-const lightControllers = require("../controllers/light");
+const {
+  getOutcomes,
+  updateTotals,
+  newInvoice,
+  newInvoices,
+  payInvoices,
+  deleteOutcome,
+} = require("../controllers/light");
 const router = express.Router();
 
-router.get('/:projectId/outcomes', lightControllers.getOutcomes)
-router.put('/:projectId/totals', lightControllers.updateTotals)
-router.post('/invoice', lightControllers.newInvoice)
-router.post('/invoices', lightControllers.newInvoices)
-router.put('/invoices', lightControllers.payInvoices)
+router.get("/:projectId/outcomes", getOutcomes);
+router.put("/:projectId/totals", updateTotals);
+router.post("/invoice", newInvoice);
+router.post("/invoices", newInvoices);
+router.put("/invoices", payInvoices);
+router.delete("/outcome/:id", deleteOutcome);
 
-module.exports = router
+module.exports = router;
