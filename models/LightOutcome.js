@@ -5,6 +5,9 @@ class LightOutcome extends S.Model {}
 
 LightOutcome.init(
   {
+    date: {
+      type: S.DATE,
+    },
     amount: {
       type: S.FLOAT,
       allowNull: false,

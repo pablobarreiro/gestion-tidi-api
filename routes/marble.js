@@ -1,11 +1,12 @@
 const express = require("express");
 const {getOutcomes, updateTotals, updateOutcomes, newOutcome, deleteOutcome} = require("../controllers/marble");
+const { validateAdmin } = require("../middleware/auth");
 const router = express.Router();
 
-router.get('/:projectId/outcomes', getOutcomes)
-router.put('/:projectId/totals', updateTotals)
+router.get('/:projectId/outcomes', validateAdmin, getOutcomes)
+router.put('/:projectId/totals', validateAdmin, updateTotals)
 // router.put('/:projectId/outcomes', updateOutcomes)
-router.post('/outcome', newOutcome)
-router.delete('/outcome/:id', deleteOutcome)
+router.post('/outcome', validateAdmin, newOutcome)
+router.delete('/outcome/:id', validateAdmin, deleteOutcome)
 
 module.exports = router

@@ -5,9 +5,10 @@ module.exports = {
   // req.params ---> projectId
   getOutcomes: async (req, res) => {
     try {
-      const outcomes = await IronWorkingOutcome.findAll(
-        Number(req.params.projectId)
-      );
+      const outcomes = await IronWorkingOutcome.findAll({
+        where: { projectId: Number(req.params.projectId)}
+      });
+      console.log(outcomes)
       // Devuelve [outcome1, outcome2, ...]
       res.sendStatus(outcomes);
     } catch (err) {

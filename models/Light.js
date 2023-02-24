@@ -15,6 +15,10 @@ Light.init(
       type: S.BOOLEAN,
       defaultValue: false,
     },
+    adjust_paid: {
+      type: S.BOOLEAN,
+      defaultValue: false
+    }
   },
   { sequelize: db, modelName: "light_generals" }
 );

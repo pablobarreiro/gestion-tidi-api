@@ -15,11 +15,47 @@ const {
 const Op = require("sequelize").Op;
 
 module.exports = {
-  single: async (req, res) => {
+  adminSingle: async (req, res) => {
     try {
       const project = await Project.findOne({
         where: { id: Number(req.params.projectId) },
         include: [Carpentry, CarpentryOutcome, IronWorking, IronWorkingOutcome, Light, LightOutcome, Marble, MarbleOutcome, IncomePartial, IncomeTotal, Budget],
+        order: [
+          ['id', 'ASC'],
+          [IronWorkingOutcome,'invoice_date','ASC'],
+          [IronWorkingOutcome,'pay_date','ASC'],
+          [LightOutcome,'date','ASC'],
+          [LightOutcome,'pay_date','ASC'],
+          [MarbleOutcome,'pay_date','ASC'],
+          [CarpentryOutcome,'pay_date','ASC'],
+          [IncomePartial,'pay_date','ASC'],
+        ]
+      });
+      res.send(project);
+    } catch (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+  },
+
+
+  adminAll: async (req, res) => {
+    try {
+      const project = await Project.findAll({
+        include: [Carpentry, CarpentryOutcome, IronWorking, IronWorkingOutcome, Light, LightOutcome, Marble, MarbleOutcome, IncomePartial, IncomeTotal, Budget],
+      });
+      res.send(project);
+    } catch (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+  },
+
+  single: async (req, res) => {
+    try {
+      const project = await Project.findOne({
+        where: { id: Number(req.params.projectId) },
+        include: [Budget],
         order: [['id', 'ASC']]
       });
       res.send(project);
@@ -33,7 +69,7 @@ module.exports = {
   all: async (req, res) => {
     try {
       const project = await Project.findAll({
-        include: [Carpentry, CarpentryOutcome, IronWorking, IronWorkingOutcome, Light, LightOutcome, Marble, MarbleOutcome, IncomePartial, IncomeTotal, Budget],
+        include: [Budget],
       });
       res.send(project);
     } catch (err) {
@@ -56,7 +92,7 @@ module.exports = {
       const lightTotals = await Light.create(initialValues);
       const marbleTotals = await Marble.create(initialValues);
       const incomeTotals = await IncomeTotal.create(initialValues);
-      const budgetTotals = await Budget.create({carpentry:0,iron_working:0,light:0,marble:0});
+      const budgetTotals = await Budget.create({carpentry:0,iron_working:0,light:0,marble:0,dolar:0});
 
       await carpentryTotals.setProject(newProject);
       await ironWorkingTotals.setProject(newProject);
