@@ -73,7 +73,7 @@ module.exports = {
         await user.update({ username: newUsername });
         const token = generateToken({
           id: user.id,
-          username: user.username,
+          username: user.username.toLowerCase(),
           is_admin: user.is_admin,
         });
         res.clearCookie("token");
