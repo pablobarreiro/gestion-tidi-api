@@ -2,6 +2,7 @@ const express = require("express");
 const {login, newUser, logout, persist, changePassword, changeUsername} = require("../controllers/user");
 const router = express.Router();
 const { validateUser } = require("../middleware/auth");
+require("dotenv").config({ path: ".env" });
 
 router.post('/login', login);
 if(process.env.IS_NEW_USER_ENABLED==="true") router.post('/newUser', newUser);
