@@ -29,6 +29,7 @@ services:
   
   nginx:
     restart: unless-stopped
+    container_name: nginx
     image: staticfloat/nginx-certbot
     ports:
         - 80:80/tcp
@@ -38,6 +39,8 @@ services:
     volumes:
       - ./conf.d:/etc/nginx/user.conf.d:ro
       - letsencrypt:/etc/letsencrypt
+    depends_on:
+      - app
 
 volumes:
   pgdata:
