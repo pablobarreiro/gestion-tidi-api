@@ -1,6 +1,7 @@
 version: "3"
 services: 
   app:
+    container_name: app
     build: .
     ports:
       - 3001:3001
@@ -23,6 +24,6 @@ services:
       POSTGRES_DB: "${POSTGRES_DB}"
     volumes:
       - pgdata:/var/lib/postgresql/data
-    
+
 volumes:
   pgdata:
