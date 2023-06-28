@@ -11,6 +11,7 @@ services:
       CLIENT_BASE_URI: "${CLIENT_BASE_URI}"
       JWT_SECRET: "${JWT_SECRET}"
       DATABASE_USE_SSL: "${DATABASE_USE_SSL}"
+      IS_NEW_USER_ENABLED: "${IS_NEW_USER_ENABLED}"
     depends_on:
       - app_db
 

@@ -4,7 +4,7 @@ const router = express.Router();
 const { validateUser } = require("../middleware/auth");
 
 router.post('/login', login);
-router.post('/newUser', newUser);
+if(process.env.IS_NEW_USER_ENABLED==="true") router.post('/newUser', newUser);
 router.post('/logout', logout);
 router.get('/me', validateUser, persist);
 router.put('/username', changeUsername);

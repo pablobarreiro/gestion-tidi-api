@@ -8,9 +8,9 @@ module.exports = {
       const user = await User.findOne({
         where: { username: req.body.username.toLowerCase() },
       });
-      if (!user) return res.status(404).send("User not found");
+      if (!user) return res.status(401).send("Wrong credentials");
       if (!user.validatePassword(req.body.password))
-        return res.status(401).send("Wrong password");
+        return res.status(401).send("Wrong credentials");
       else {
         const token = generateToken({
           id: user.id,
